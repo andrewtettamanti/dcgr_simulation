@@ -3,6 +3,8 @@ import logging
 import mesa
 import itertools
 import json
+import numpy as np
+
 
 from peripherals.movement import generate_pattern
 from payload import ClientPayload
@@ -201,14 +203,43 @@ class LunarModel(mesa.Model):
                         self.data_drops.remove(drop)
                         pass
 
-    def get_rssi(self, agent, other):
-        """Returns the RSSI of the agent to the other agent in dBm"""
-        distance = self.space.get_distance(agent.pos, other.pos)
-        if distance == 0:
-            return 0
-        clean_rssi = 10 * 2.5 * math.log10(1/distance)
-        noise = self.random.gauss(0, self.model_params["rssi_noise_stdev"])
-        return clean_rssi + noise
+    # def get_rssi(self, agent, other):
+        
+        
+    #     """Returns the RSSI of the agent to the other agent in dBm"""
+    #     distance = self.space.get_distance(agent.pos, other.pos)
+    #     if distance == 0:
+    #         return 0
+    #     clean_rssi = 10 * 2.5 * math.log10(1/distance)
+    #     noise = self.random.gauss(0, self.model_params["rssi_noise_stdev"])
+    #     return clean_rssi + noise
+
+
+    def rssi_to_dict(self, path_rssi_array, position_dict={}):
+        rssi_array = np.load(path_rssi_array)
+        """
+        Loop through the rssi array and add the position values to the dictionary
+        """
+        
+        for i in range(rssi_array.shape[0]):
+            for j in range(rssi_array.shape[1]):
+                position_dict[(i,j)] = rssi_array[i][j]
+        return position_dict
+    
+    def get_rssi_value(self, position, position_dictionary):
+        position_tuple = tuple(position)
+        if position_tuple in position_dictionary:
+            return position_dictionary[position_tuple]
+        else:
+            return -198
+
+
+    # def get_rssi_value(self, position, position_dict):
+    #     if position in position_dict:
+    #         return position_dict[position]
+    #     else:
+    #         return -198
+
 
     def get_distance(self, rssi):
         """
@@ -231,9 +262,12 @@ class LunarModel(mesa.Model):
         con_thresh = agent.radio.connection_thresh
 
         neighbors = []
+        
         for other in self.schedule.agents:
             if other is not agent:
-                rssi = self.get_rssi(agent, other)
+                #rssi = self.get_rssi(agent, other)
+                position_dict = self.rssi_to_dict('rssi/rssi_experiment.npy')
+                rssi = self.get_rssi_value(agent.pos,position_dict)
                 if rssi >= det_thresh:
                     connected = rssi >= con_thresh
                     neighbors.append({
