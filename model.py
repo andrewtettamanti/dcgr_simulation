@@ -203,16 +203,16 @@ class LunarModel(mesa.Model):
                         self.data_drops.remove(drop)
                         pass
 
-    # def get_rssi(self, agent, other):
+    def get_rssi(self, agent, other):
         
         
-    #     """Returns the RSSI of the agent to the other agent in dBm"""
-    #     distance = self.space.get_distance(agent.pos, other.pos)
-    #     if distance == 0:
-    #         return 0
-    #     clean_rssi = 10 * 2.5 * math.log10(1/distance)
-    #     noise = self.random.gauss(0, self.model_params["rssi_noise_stdev"])
-    #     return clean_rssi + noise
+        """Returns the RSSI of the agent to the other agent in dBm"""
+        distance = self.space.get_distance(agent.pos, other.pos)
+        if distance == 0:
+            return 0
+        clean_rssi = 10 * 2.5 * math.log10(1/distance)
+        noise = self.random.gauss(0, self.model_params["rssi_noise_stdev"])
+        return clean_rssi + noise
 
 
     def rssi_to_dict(self, path_rssi_array, position_dict={}):
@@ -266,8 +266,9 @@ class LunarModel(mesa.Model):
         for other in self.schedule.agents:
             if other is not agent:
                 #rssi = self.get_rssi(agent, other)
-                position_dict = self.rssi_to_dict('rssi/rssi_experiment.npy')
-                rssi = self.get_rssi_value(agent.pos,position_dict)
+                rssi = self.get_rssi(agent, other)
+                #position_dict = self.rssi_to_dict('rssi/rssi_experiment.npy')
+                #rssi = self.get_rssi_value(agent.pos,position_dict)
                 if rssi >= det_thresh:
                     connected = rssi >= con_thresh
                     neighbors.append({
