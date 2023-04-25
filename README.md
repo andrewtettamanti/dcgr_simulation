@@ -14,3 +14,10 @@
 --make-contact-plan         used to generate a contact plan between RouterAgents within the simulator
                                 (must have a max_step number in model params)
 ```
+
+## Running the rssi simulation
+
+```
+python3 run_model_vis.py -i 'simulations/rssi_scenario/rssi_scenario.json' -m 'simulations/rssi_scenario/rssi_scenario_modelparams.json'
+
+```

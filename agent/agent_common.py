@@ -27,6 +27,8 @@ def rssi_find_router_target(agent: mesa.Agent):
     # 1. Create a matrix with previous data
     positions = []
     rssis = []
+    
+
     for h in agent.history:
         if "neighborhood" in h["radio"]:
             for n in h["radio"]["neighborhood"]:
@@ -41,6 +43,8 @@ def rssi_find_router_target(agent: mesa.Agent):
 
     positions = np.array(positions[-100:])
     rssis = np.array(rssis[-100:])
+    
+    
 
     if len(positions) < 10:
         agent.movement.step()
@@ -50,6 +54,8 @@ def rssi_find_router_target(agent: mesa.Agent):
     #    best_rssi = 10 * 2.5 * log10(1/((x-a)^2 + (y-b)^2)**0.5)
     #    where (a, b) is the position of the target
     def rssi_model(x, y, a, b, c):
+        
+        
         return 10 * c * np.log10(1 / ((a - x) ** 2 + (b - y) ** 2) ** 0.5)
 
     def rssi_error(params):
