@@ -208,11 +208,20 @@ class LunarModel(mesa.Model):
         
         """Returns the RSSI of the agent to the other agent in dBm"""
         distance = self.space.get_distance(agent.pos, other.pos)
-        if distance == 0:
-            return 0
-        clean_rssi = 10 * 2.5 * math.log10(1/distance)
-        noise = self.random.gauss(0, self.model_params["rssi_noise_stdev"])
-        return clean_rssi + noise
+        
+        rssi_array = np.load('rssi/rssi_experiment.npy')
+        max= -199
+        try:
+            return rssi_array[round(agent.pos[0]),round(agent.pos[1])]
+        except IndexError: 
+            return max
+
+        
+        #if distance == 0:
+        #    return 0
+        #clean_rssi = 10 * 2.5 * math.log10(1/distance)
+        #noise = self.random.gauss(0, self.model_params["rssi_noise_stdev"])
+        #return clean_rssi + noise
 
 
     def rssi_to_dict(self, path_rssi_array, position_dict={}):
@@ -226,12 +235,12 @@ class LunarModel(mesa.Model):
                 position_dict[(i,j)] = rssi_array[i][j]
         return position_dict
     
-    def get_rssi_value(self, position, position_dictionary):
-        position_tuple = tuple(position)
-        if position_tuple in position_dictionary:
-            return position_dictionary[position_tuple]
-        else:
-            return -198
+    # def get_rssi_value(self, position, position_dictionary):
+    #     position_tuple = tuple(position)
+    #     if position_tuple in position_dictionary:
+    #         return position_dictionary[position_tuple]
+    #     else:
+    #         return -199
 
 
     # def get_rssi_value(self, position, position_dict):

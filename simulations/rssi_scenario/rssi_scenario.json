@@ -36,7 +36,7 @@
         "pattern": "spiral",
         "speed": 3.5,
         "options": {
-          "center": [800,400],
+          "center": [100,100],
           "separation": 10
         }
       }
