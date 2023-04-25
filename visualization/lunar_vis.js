@@ -1,5 +1,5 @@
 let PIXEL_MULTIPLIER = 3;
-let SCALE = 0.8;
+let SCALE = 0.4;
 
 let showRanges = true;
 let historyFade = false;
