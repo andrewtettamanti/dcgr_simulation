@@ -1,8 +1,10 @@
 {
   "agent_defaults": {
     "radio": {
-      "detection_thresh": -90,
-      "connection_thresh": -29
+
+
+      "detection_thresh": -65,
+      "connection_thresh": -40
     }
   },
    "agents": [
@@ -23,8 +25,12 @@
             58
           ]
         }
+
       }
+
     },
+
+    
     {
       "name": "C1",
       "type": "client",
@@ -32,14 +38,22 @@
       "radio": {
         "detection_thresh": -65
       },
+      "special_behavior": {
+        "type": "find_node_rssi",
+        "options": {
+            "target_id": "all"
+        }
+      },
+
       "movement": {
         "pattern": "spiral",
         "speed": 1.5,
         "options": {
-          "center": [80,99],
+          "center": [100,85],
           "separation": 10
         }
       }
+
     }
   ]
 }

@@ -246,12 +246,12 @@ const LunarVis = function (maxSimX, maxSimY) {
     if (showRanges) {
       nodes.forEach(node => {
         if (node.radio.estimated_detection_range) {
-          drawShape(node.pos[0], node.pos[1], node.radio.estimated_detection_range, "rgba(0, 0, 255, 0.07)", "circle", false, "rgba(0, 0, 255, 0.0)");
+          drawShape(node.pos[0], node.pos[1], node.radio.estimated_detection_range*SCALE, "rgba(0, 0, 255, 0.07)", "circle", false, "rgba(0, 0, 255, 0.0)");
         }
       });
       nodes.forEach(node => {
         if (node.radio.estimated_connection_range) {
-          drawShape(node.pos[0], node.pos[1], node.radio.estimated_connection_range, "rgba(0, 255, 0, 0.15)", "circle", false, "rgba(0, 255, 0, 0.0)");
+          drawShape(node.pos[0], node.pos[1], node.radio.estimated_connection_range*SCALE, "rgba(0, 255, 0, 0.15)", "circle", false, "rgba(0, 255, 0, 0.0)");
         }
       });
     }

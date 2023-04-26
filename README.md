@@ -21,3 +21,8 @@
 python3 run_model_vis.py -i 'simulations/rssi_scenario/rssi_scenario.json' -m 'simulations/rssi_scenario/rssi_scenario_modelparams.json'
 
 ```
+
+### Experimental RSSI Interpolation used for simulation 
+
+Under the rssi directory, the rssi data is interpolated in a jupyter notebook
+

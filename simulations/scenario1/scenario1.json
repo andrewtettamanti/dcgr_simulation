@@ -1,7 +1,7 @@
 {
   "agent_defaults": {
     "radio": {
-      "detection_thresh": -60,
+      "detection_thresh": -65,
       "connection_thresh": -50
     }
   },
