@@ -1,10 +1,10 @@
 let PIXEL_MULTIPLIER = 1;
 let SCALE = 0.15;
 
-let showRanges = true;
+let showRanges = false;
 let historyFade = false;
 let showDetectionLines = false;
-let showTargetLocations = true;
+let showTargetLocations = false;
 
 const LunarVis = function (maxSimX, maxSimY) {
   const elements = document.getElementById("elements");
@@ -242,7 +242,7 @@ const LunarVis = function (maxSimX, maxSimY) {
       }
     });
 
-    // Draw the detection and connection ranges as transparent circles
+    //Draw the detection and connection ranges as transparent circles
     if (showRanges) {
       nodes.forEach(node => {
         if (node.radio.estimated_detection_range) {
