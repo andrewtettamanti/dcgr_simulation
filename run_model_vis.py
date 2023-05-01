@@ -11,8 +11,8 @@ from peripherals.movement import *
 # 1 model pixel = 1 meter
 # 1 tick = 1 second
 
-SIM_WIDTH = 300  # 1 km
-SIM_HEIGHT =200  # 650 m
+SIM_WIDTH = 200  # 1 km
+SIM_HEIGHT =150  # 650 m
 
 
 # Model parameters defines model-wide constants

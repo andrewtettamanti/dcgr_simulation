@@ -1,4 +1,4 @@
-let PIXEL_MULTIPLIER = 1;
+let PIXEL_MULTIPLIER = 2;
 let SCALE = 0.15;
 
 let showRanges = false;
@@ -86,14 +86,14 @@ const LunarVis = function (maxSimX, maxSimY) {
   };
 
 
-  // Draws a line between two points
+  //Draws a line between two points
   const drawLine = (x1, y1, x2, y2, color) => {
     context.lineWidth = 3 * PIXEL_MULTIPLIER * SCALE;
     context.beginPath();
     context.moveTo(scale(x1), scale(y1));
     context.lineTo(scale(x2), scale(y2));
-    context.strokeStyle = color;
-    context.stroke();
+    //context.strokeStyle = color;
+    //context.stroke();
   };
 
   // Determines the color for an RSSI value

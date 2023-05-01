@@ -4,7 +4,7 @@
 
 
       "detection_thresh": -65,
-      "connection_thresh": -40
+      "connection_thresh": -37
     }
   },
    "agents": [
@@ -14,7 +14,7 @@
       "id": 1,
       "cp_file": "simulations/rssi_scenario/rssi_scenario_contactplan_5000steps.json",
       "radio": {
-        "detection_thresh": -65
+        "detection_thresh": -40
       },
       "movement": {
         "pattern": "fixed",
@@ -36,7 +36,7 @@
       "type": "client",
       "id": 2,
       "radio": {
-        "detection_thresh": -60
+        "detection_thresh": -65
       },
       "special_behavior": {
         "type": "find_node_rssi",
@@ -49,7 +49,7 @@
         "pattern": "spiral",
         "speed": 1.5,
         "options": {
-          "center": [80,80],
+          "center": [85,57],
           "separation": 10
         }
       }

@@ -209,6 +209,7 @@ class LunarModel(mesa.Model):
         """Returns the RSSI in dBm of the agent and other agent in reference in the rssi data"""
 
         rssi_array = np.load('rssi/rssi_experiment.npy')
+
         max= -199
         try:
             return int(rssi_array[round(agent.pos[0]),round(agent.pos[1])])
