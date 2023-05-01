@@ -1,7 +1,7 @@
 {
-    "max_steps": 5000,
+    "max_steps": 500,
     "routing_protocol": 0,
-    "rssi_noise_stdev": 0,
+    "rssi_noise_stdev": 4.0,
     "model_speed_limit": 40,
     "data_drop_schedule": [
 

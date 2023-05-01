@@ -1,10 +1,8 @@
 {
   "agent_defaults": {
     "radio": {
-
-
-      "detection_thresh": -65,
-      "connection_thresh": -40
+      "detection_thresh": -200,
+      "connection_thresh": -35
     }
   },
    "agents": [
@@ -13,9 +11,6 @@
       "type": "router",
       "id": 1,
       "cp_file": "simulations/rssi_scenario/rssi_scenario_contactplan_5000steps.json",
-      "radio": {
-        "detection_thresh": -65
-      },
       "movement": {
         "pattern": "fixed",
         "speed": 0,
@@ -33,11 +28,7 @@
     
     {
       "name": "C1",
-      "type": "client",
       "id": 2,
-      "radio": {
-        "detection_thresh": -65
-      },
       "special_behavior": {
         "type": "find_node_rssi",
         "options": {

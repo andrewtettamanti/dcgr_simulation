@@ -4,7 +4,7 @@ import mesa
 import itertools
 import json
 import numpy as np
-
+import matplotlib.pyplot as plt
 
 from peripherals.movement import generate_pattern
 from payload import ClientPayload
@@ -70,6 +70,10 @@ class LunarModel(mesa.Model):
         self.router_agents = {}
         self.client_agents = {}
 
+        # For plotting
+        self.rssi_history = []
+        self.distance_history = []
+
         for agent_options in initial_state["agents"]:
 
             # Merge the node defaults with the individual node options
@@ -111,6 +115,14 @@ class LunarModel(mesa.Model):
         if "make_contact_plan" in self.model_params:
             self.__track_contacts()
 
+        # Find the distance from the client to the router
+        # This is used for plotting
+        client_agent = next((x for x in self.schedule.agents if x.name == "C1"), None)
+        router_agent = next((x for x in self.schedule.agents if x.name == "L2"), None)
+
+        self.rssi_history.append(self.get_rssi(client_agent, router_agent))
+        self.distance_history.append(self.space.get_distance(client_agent.pos, router_agent.pos))
+
         self.schedule.step()
 
         if "max_steps" in self.model_params and self.model_params["max_steps"] is not None:
@@ -122,6 +134,22 @@ class LunarModel(mesa.Model):
         if "make_contact_plan" in self.model_params:
             self.__generate_contact_plan()
             # self.contacts = [] # to clear contacts for next run?
+
+        # Make a plot of the RSSI and distance over time
+        plt.figure(figsize=(6, 4))
+        plt.title("RSSI Based Agent Convergence (Experimentally Collected RSSI Data)")
+        ax1 = plt.subplot(111)
+        ax1.plot(self.rssi_history, 'b-')
+        ax1.set_xlabel('Time (simulation seconds)')
+        ax1.set_ylabel('RSSI (dBm)')
+        ax1.yaxis.label.set_color('blue')
+
+        ax2 = plt.twinx()
+        ax2.plot(self.distance_history, 'r-')
+        ax2.set_ylabel('Distance (m)')
+        ax2.yaxis.label.set_color('red')
+
+        plt.savefig("rssi_distance.png")
 
     def __track_contacts(self):
         curr_step = self.schedule.steps
@@ -204,8 +232,6 @@ class LunarModel(mesa.Model):
                         pass
 
     def get_rssi(self, agent, other):
-        
-        
         """Returns the RSSI in dBm of the agent and other agent in reference in the rssi data"""
 
         rssi_array = np.load('rssi/rssi_experiment.npy')
@@ -217,14 +243,14 @@ class LunarModel(mesa.Model):
 
 
 
-    # def get_rssi(self, agent, other):
-    #     """Returns the RSSI of the agent to the other agent in dBm"""
-    #     distance = self.space.get_distance(agent.pos, other.pos)
-    #     if distance == 0:
-    #         return 0
-    #     clean_rssi = 10 * 2.5 * math.log10(1/distance)
-    #     noise = self.random.gauss(0, self.model_params["rssi_noise_stdev"])
-    #     return clean_rssi + noise
+    def get_rssi(self, agent, other):
+        """Returns the RSSI of the agent to the other agent in dBm"""
+        distance = self.space.get_distance(agent.pos, other.pos)
+        if distance == 0:
+            return 0
+        clean_rssi = 10 * 2.5 * math.log10(1/distance)
+        noise = self.random.gauss(0, self.model_params["rssi_noise_stdev"])
+        return clean_rssi + noise
 
 
 
